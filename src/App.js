@@ -3,7 +3,10 @@ import Home from "./components/pages/Home";
 import './App.css';
 import NavBar from './components/NavBar';
 import Cats from "./components/pages/Cats";
-import Dogs from "./components/pages/Dogs";
+import Dogs from "./components/pages/Dogs"
+
+
+
 
 
 function App() {

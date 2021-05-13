@@ -1,54 +1,67 @@
-import React, { useState, useEffect } from 'react';
-import ProgressBar from './ProgressBar';
-
-import { useDropzone } from 'react-dropzone'
-import "./all.css"
+import {React, useState, useEffect}from 'react'
+import { hstorage } from '../firebase/firebase';
 
 
-// const containerStyle = {
-//   background: '#dadada',
-//   width: 250,
-//   height: 250,
-//   display: 'flex',
-//   justifyContent: 'center',
-//   alignItems: 'center',
-//   padding: 50,
-//   textAlign: 'center',
-// }
+const UploadFile = () => {
+  const [image, setImage] = useState(null);
+  const [url, setUrl] = useState("");
+  const [progress, setProgress] = useState(0);
 
-const Upload = () => {
-  const [file, setFile] = useState(null);
-  const [error, setError] = useState(null);
-
-  const types = ['image/png', 'image/jpeg'];
-
-  const handleChange = (e) => {
-    let selected = e.target.files[0];
-
-    if (selected && types.includes(selected.type)) {
-      setFile(selected);
-      setError('');
-    } else {
-      setFile(null);
-      setError('Please select an image file (png or jpg)');
+  const unhandlechange = e =>{
+    if(e.target.files[0]){
+      setImage(e.target.files[0])
     }
-  };
+     
+  }
+  console.log("image: ", image);
+
+  const unhandlesubmit = () => {
+
+    const uploadTask = hstorage.ref(`dog-adoptions/${image.name}`).put(image);
+    uploadTask.on(
+      "state_changed",
+      snapshot => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgress(progress);
+      },
+      error => {
+        console.log(error);
+      },
+      () => {
+        hstorage
+          .ref("dog-adoptions")
+          .child(image.name)
+          .getDownloadURL()
+          .then(url => {
+            setUrl(url);
+          });
+      }
+      
+    );
+
+  }
 
   return (
     <form>
-      <label>
-        <input type="file" onChange={handleChange} />
-        <span>+</span>
-      </label>
-      <div className="output">
-        { error && <div className="error">{ error }</div>}
-        { file && <div>{ file.name }</div> }
-        { file && <ProgressBar file={file} setFile={setFile} /> }
-      </div>
+      <header className="header-form"><span>Input dogs Form</span></header>
+    <label>Select an image if any</label><br/>
+      <input type="file" onChange={unhandlechange}/>
+      <div> Preview Images</div>
+      <br/><br/>
+      <label>Name</label><br/>
+      <input type="text"/>
+      <br/>
+      <label>Description</label><br/>
+      <textarea/>
+      <br/><br/>
+      <button className="btn2" onClick={unhandlesubmit}>Submit</button>
+      <br/>
     </form>
-  );
- 
+  
+      
+  )
 }
 
-
-export default Upload;
+export default UploadFile
