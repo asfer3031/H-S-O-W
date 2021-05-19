@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import "../all.css"
 import { motion } from "framer-motion"
-import Upload from "../UploadFile"
+import UploadFile from "../UploadFile"
 import ImageGrid from "../ImageGrid"
 import Modal from 'react-modal'
 Modal.setAppElement('#root');
@@ -24,11 +24,11 @@ const Dogs = () => {
 
               
                 <button onClick={()=>setmodalIsOpen(false)} className="btn"><i class="fas fa-times-circle"></i></button>
-                <Upload/>
+                <UploadFile/>
             </Modal>
 
        <div className="picscont">
-      {/* <ImageGrid/> */}
+      <ImageGrid/>
       </div>
       <button className="btn" onClick={()=>setmodalIsOpen(true)}><i class="fas fa-plus"></i></button>
       </motion.div>
