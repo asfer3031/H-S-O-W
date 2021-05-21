@@ -1,14 +1,12 @@
+import React from 'react'
 
-import React from 'react';
 import { fstore } from '../firebase/firebase';
 import useFirestore from '../hooks/Usefirestore';
 
+const ImageGridCats = () => {
+    const { docs } = useFirestore('cat-adoptions');
 
-
-const ImageGrid = () => {
-  const { docs } = useFirestore('dog-adoptions');
-
- const db = fstore.collection('dog-adoptions');
+ const db = fstore.collection('cat-adoptions');
 
 
 
@@ -38,4 +36,4 @@ const ImageGrid = () => {
   )
 }
 
-export default ImageGrid;
+export default ImageGridCats
