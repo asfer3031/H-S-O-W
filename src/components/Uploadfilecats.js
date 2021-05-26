@@ -38,7 +38,6 @@ const Uploadfilecats = () => {
       }
     };
   
-  
     const unhandlesubmit = () => {
       const storageRef = hstorage.ref(`cat-adoptions/${file.name}`);
       const collectionRef = fstore.collection('cat-adoptions');

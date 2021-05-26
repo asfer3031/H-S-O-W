@@ -8,9 +8,6 @@ const ImageGridCats = () => {
 
  const db = fstore.collection('cat-adoptions');
 
-
-
-
   return (
 
 

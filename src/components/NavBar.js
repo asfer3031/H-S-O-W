@@ -10,9 +10,7 @@ function NavBar() {
     <>
       <nav className="navbar">
         <div className="nav-container">
-          <div className="lg"><h3>Crm</h3></div>
-          
-
+          <div className="lg"></div>
           <ul className={click ? "nav-menu active" : "nav-menu"}>
             <li className="nav-item">
               <NavLink
