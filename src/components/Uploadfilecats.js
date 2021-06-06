@@ -8,6 +8,7 @@ const Uploadfilecats = () => {
     const [url, setUrl] = useState("");
     const [progress, setProgress] = useState(0);
     const [error, setError] = useState(null);
+    const [Button, setButton] = useState(true);
     
     const types = ['image/png', 'image/jpeg'];
   
@@ -31,15 +32,21 @@ const Uploadfilecats = () => {
   
       if (selected && types.includes(selected.type)) {
         setFile(selected);
+        setButton(false);
         setError('');
       } else {
         setFile(null);
+        setButton(false);
         setError('Please select an image file (png or jpg)');
       }
     };
   
     const unhandlesubmit = () => {
       const storageRef = hstorage.ref(`cat-adoptions/${file.name}`);
+      if(values.Name===""){
+        values.Name = "A cute pet"
+     }
+
       const collectionRef = fstore.collection('cat-adoptions');
       storageRef.put(file).on('state_changed', (snapshot) => {
         var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -86,7 +93,7 @@ const Uploadfilecats = () => {
         <textarea placeholder="Description" value={values.Description} onChange={handleInputchange} name="Description"/>
         <br/><br/>
        
-        <button className="btn2" onClick={unhandlesubmit}>Submit</button>
+        <button className="btn2" onClick={unhandlesubmit} disabled={Button}>Submit</button>
         <br/>
       </div>
     
